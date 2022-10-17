@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9104ca68-e7ba-4fbb-be7f-264af9fe8bdd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9104ca68-e7ba-4fbb-be7f-264af9fe8bdd" name="Changes" comment="gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +48,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/MTWORUSZ/OneDrive - Capgemini/Documents/Bank App"
+    "jdk.selected.JAVA_MODULE": "18",
+    "last_opened_file_path": "C:/Users/MTWORUSZ/OneDrive - Capgemini/Documents/Bank App",
+    "settings.editor.selected.configurable": "advanced.settings"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -66,6 +67,21 @@
       <option name="presentableId" value="Default" />
       <updated>1665995176539</updated>
     </task>
+    <task id="LOCAL-00001" summary="gitignore">
+      <created>1665997290829</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665997290829</updated>
+    </task>
+    <task id="LOCAL-00002" summary="gitignore">
+      <created>1665997315259</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1665997315259</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -78,5 +94,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
   </component>
 </project>
