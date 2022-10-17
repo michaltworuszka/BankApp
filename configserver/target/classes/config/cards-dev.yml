@@ -1,0 +1,12 @@
+cards:
+  msg: Welcome to the Cards Dev application
+  build-version: 2
+  mailDetails:
+    hostName: dev-cards@tworuszka.com
+    port: 9022
+    from: dev-cards@tworuszka.com
+    subject: Your Card Details from Dev Environment
+  activeBranches:
+    - Chennai
+    - Berlin
+    - Indianapolis

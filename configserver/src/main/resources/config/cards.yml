@@ -1,0 +1,12 @@
+cards:
+  msg: Welcome to the Cards Default application
+  build-version: 3
+  mailDetails:
+    hostName: default-cards@tworuszka.com
+    port: 9002
+    from: default-cards@tworuszka.com
+    subject: Your Card Details from Default Environment
+  activeBranches:
+    - Mumbai
+    - London
+    - Washington

@@ -1,0 +1,12 @@
+loans:
+  msg: Welcome to the Loans Dev application
+  build-version: 2
+  mailDetails:
+    hostName: dev-loans@tworuszka.com
+    port: 9021
+    from: dev-loans@tworuszka.com
+    subject: Your Loan Details from Dev Environment
+  activeBranches:
+    - Chennai
+    - Berlin
+    - Indianapolis

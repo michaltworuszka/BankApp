@@ -1,0 +1,12 @@
+card:
+  msg: Welcome to the Cards Prod application
+  build-version: 1
+  mailDetails:
+    hostName: prod-cards@tworuszka.com
+    port: 9012
+    from: prod-cards@tworuszka.com
+    subject: Your Card Details from Prod Environment
+  activeBranches:
+    - Hyderabad
+    - Paris
+    - NewYork

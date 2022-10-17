@@ -1,0 +1,12 @@
+accounts:
+  msg: Welcome to the Accounts Dev application
+  build-version: 2
+  mailDetails:
+    hostName: dev-accounts@tworuszka.com
+    port: 9020
+    from: dev-accounts@tworuszka.com
+    subject: Your Account Details from Dev Environment
+  activeBranches:
+    - Chennai
+    - Berlin
+    - Indianapolis

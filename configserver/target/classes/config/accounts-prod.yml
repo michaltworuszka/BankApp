@@ -1,0 +1,12 @@
+accounts:
+  msg: Welcome to the Accounts Prod application
+  build-version: 1
+  mailDetails:
+    hostName: prod-accounts@tworuszka.com
+    port: 9010
+    from: prod-accounts@tworuszka.com
+    subject: Your Account Details from Prod Environment
+  activeBranches:
+    - Hyderabad
+    - Paris
+    - NewYork

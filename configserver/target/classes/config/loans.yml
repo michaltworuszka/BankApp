@@ -1,0 +1,12 @@
+loans:
+  msg: Welcome to the Loans Default application
+  build-version: 3
+  mailDetails:
+    hostName: default-loans@tworuszka.com
+    port: 9001
+    from: default-loans@tworuszka.com
+    subject: Your Loan Details from Default Environment
+  activeBranches:
+    - Mumbai
+    - London
+    - Washington

@@ -1,0 +1,12 @@
+accounts:
+  msg: Welcome to the Accounts Default application
+  build-version: 3
+  mailDetails:
+    hostName: default-accounts@tworuszka.com
+    port: 9000
+    from: default-accounts@tworuszka.com
+    subject: Your Account Details from Default Environment
+  activeBranches:
+    - Mumbai
+    - London
+    - Washington

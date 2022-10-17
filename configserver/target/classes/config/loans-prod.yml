@@ -1,0 +1,12 @@
+loans:
+  msg: Welcome to the Loans Prod application
+  build-version: 1
+  mailDetails:
+    hostName: prod-loans@tworuszka.com
+    port: 9011
+    from: prod-loans@tworuszka.com
+    subject: Your Loans Details from Prod Environment
+  activeBranches:
+    - Hyderabad
+    - Paris
+    - NewYork
