@@ -3,3 +3,11 @@
 /workspace.xml
 target\
 .idea\
+accounts/target
+accounts/.idea
+configserver/target
+configserver/.idea
+loans/target
+loans/.idea
+cards/target
+cards/.idea
