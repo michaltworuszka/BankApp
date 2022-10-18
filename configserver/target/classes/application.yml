@@ -1,6 +1,9 @@
 server:
   port: 8071
 
+encrypt:
+  key: fnadkjshipv353u-8q9fn994t
+
 spring:
   application:
     name: configserver
@@ -9,7 +12,7 @@ spring:
     active: git
 
   cloud.config.server:
-    native.search-locations: classpath:/config
+#    native.search-locations: classpath:/config
     git:
       uri: https://github.com/michaltworuszka/bankapp-config.git
       clone-on-start: true

@@ -4,7 +4,7 @@ spring:
   application:
     name: accounts
   profiles:
-    active: prod
+    active: default
 #  cloud:
 #    config:
 #      uri: http://localhost:8071
@@ -27,3 +27,13 @@ spring:
   h2:
     console:
       enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - refresh
+#          health,info,refresh
