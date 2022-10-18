@@ -9,6 +9,7 @@ services:
       - bank-network
     depends_on:
       - configserver
+      - eureka-server
     deploy:
       restart_policy:
         condition: on-failure
@@ -18,6 +19,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
   loans:
     image: misiekfiol/loans:latest
@@ -27,6 +29,7 @@ services:
       - bank-network
     depends_on:
       - configserver
+      - eureka-server
     deploy:
       restart_policy:
         condition: on-failure
@@ -36,11 +39,39 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
   cards:
     image: misiekfiol/cards:latest
     ports:
       - "9000:9000"
+    networks:
+      - bank-network
+    depends_on:
+      - configserver
+      - eureka-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+  configserver:
+    image: misiekfiol/configserver:latest
+    ports:
+      - "8071:8071"
+    networks:
+      - bank-network
+
+  eureka-server:
+    image: misiekfiol/eureka-server
+    ports:
+      - "8070:8070"
     networks:
       - bank-network
     depends_on:
@@ -52,15 +83,8 @@ services:
         max_attempts: 3
         window: 120s
     environment:
-      SPRING_PROFILES_ACTIVE: prod
+      SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
-
-  configserver:
-    image: misiekfiol/configserver:latest
-    ports:
-      - "8071:8071"
-    networks:
-      - bank-network
 
 networks:
   bank-network:
