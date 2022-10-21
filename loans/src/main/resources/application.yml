@@ -39,11 +39,7 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
-          - info
-          - refresh
-          - shutdown
+        include: "*"
 
 eureka:
   instance:

@@ -8,6 +8,9 @@ import com.tworuszka.accounts.model.*;
 import com.tworuszka.accounts.repository.AccountRepository;
 import com.tworuszka.accounts.service.clients.CardsFeignClient;
 import com.tworuszka.accounts.service.clients.LoansFeignClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +53,8 @@ public class AccountsController {
     }
 
     @PostMapping("/myCustomerDetails")
+//    @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallback")
+    @Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallback")
     public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
         Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId());
         List<Loans> loans = loansFeign.getLoansDetails(customer);
@@ -61,5 +66,24 @@ public class AccountsController {
         customerDetails.setCards(cards);
 
         return customerDetails;
+    }
+
+    private CustomerDetails myCustomerDetailsFallback(Customer customer, Throwable throwable) {
+        Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId());
+        List<Loans> loans = loansFeign.getLoansDetails(customer);
+        CustomerDetails customerDetails = new CustomerDetails();
+        customerDetails.setAccounts(accounts);
+        customerDetails.setLoans(loans);
+        return customerDetails;
+    }
+
+    @GetMapping("/sayHello")
+    @RateLimiter(name = "sayHello", fallbackMethod = "sayHelloFallback")
+    public String sayHello() {
+        return "Hello, Welcome to Bank";
+    }
+
+    private String sayHelloFallback(Throwable throwable) {
+        return "Hi, Welcome to Bank";
     }
 }

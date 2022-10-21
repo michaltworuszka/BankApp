@@ -42,11 +42,7 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - health
-          - info
-          - refresh
-          - shutdown
+        include: "*"
 #          health,info,refresh
 eureka:
   instance:
@@ -59,3 +55,29 @@ info:
     name: Account Microservice
     description: Bank Account App
     version: 1.0.0
+
+resilience4j:
+  circuitbreaker:
+    configs.default.registerHealthIndicator: true # register all circuit breaker information to actuator
+    instances:
+      detailsForCustomerSupportApp:
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30000
+        permittedNumberOfCallsInHalfOpenState: 2
+  retry:
+    configs.default.registerHealthIndicator: true
+    instances:
+      retryForCustomerDetails:
+        maxAttempts: 3
+        waitDuration: 2000
+  ratelimiter:
+    configs.default.registerHealthIndicator: true
+    instances:
+      sayHello:
+        timeoutDuration: 5000
+        limitRefreshPeriod: 5000
+        limitForPeriod: 1
+
+
+
