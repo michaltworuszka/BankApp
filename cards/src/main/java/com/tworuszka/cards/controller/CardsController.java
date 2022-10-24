@@ -9,10 +9,7 @@ import com.tworuszka.cards.model.Customer;
 import com.tworuszka.cards.model.Properties;
 import com.tworuszka.cards.repository.CardsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class CardsController {
     private CardsServiceConfig cardsConfig;
 
     @PostMapping("/myCards")
-    public List<Cards> getCardsDetails(@RequestBody Customer customer) {
+    public List<Cards> getCardsDetails(@RequestHeader("bank-correlation-id") String correlationId, @RequestBody Customer customer) {
         List<Cards> cards = cardRepo.findByCustomerId(customer.getCustomerId());
         if (cards != null) {
             return cards;

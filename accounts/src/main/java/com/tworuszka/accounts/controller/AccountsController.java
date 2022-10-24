@@ -12,10 +12,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,10 +52,12 @@ public class AccountsController {
     @PostMapping("/myCustomerDetails")
 //    @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallback")
     @Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallback")
-    public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
+    public CustomerDetails myCustomerDetails(
+            @RequestHeader("bank-correlation-id") String correlationId,
+            @RequestBody Customer customer) {
         Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId());
-        List<Loans> loans = loansFeign.getLoansDetails(customer);
-        List<Cards> cards = cardsFeign.getCardsDetails(customer);
+        List<Loans> loans = loansFeign.getLoansDetails(correlationId, customer);
+        List<Cards> cards = cardsFeign.getCardsDetails(correlationId, customer);
 
         CustomerDetails customerDetails = new CustomerDetails();
         customerDetails.setAccounts(accounts);
@@ -68,9 +67,11 @@ public class AccountsController {
         return customerDetails;
     }
 
-    private CustomerDetails myCustomerDetailsFallback(Customer customer, Throwable throwable) {
+    private CustomerDetails myCustomerDetailsFallback(
+            @RequestHeader("bank-correlation-id") String correlationId,
+            Customer customer, Throwable throwable) {
         Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId());
-        List<Loans> loans = loansFeign.getLoansDetails(customer);
+        List<Loans> loans = loansFeign.getLoansDetails(correlationId, customer);
         CustomerDetails customerDetails = new CustomerDetails();
         customerDetails.setAccounts(accounts);
         customerDetails.setLoans(loans);

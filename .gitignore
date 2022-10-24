@@ -12,3 +12,4 @@ loans/.idea
 cards/target
 cards/.idea
 eureka-server/target
+gateway-server/target

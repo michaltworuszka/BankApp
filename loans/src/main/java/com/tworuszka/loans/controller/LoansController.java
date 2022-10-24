@@ -9,10 +9,7 @@ import com.tworuszka.loans.model.Loans;
 import com.tworuszka.loans.model.Properties;
 import com.tworuszka.loans.repository.LoansRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class LoansController {
     private LoansServiceConfig loadConfig;
 
     @PostMapping("/myLoans")
-    public List<Loans> getLoansDetails (@RequestBody Customer customer) {
+    public List<Loans> getLoansDetails (@RequestHeader("bank-correlation-id") String correlationId, @RequestBody Customer customer) {
         List<Loans> loans = loansRepo.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
         if (loans!= null) {
             return loans;
