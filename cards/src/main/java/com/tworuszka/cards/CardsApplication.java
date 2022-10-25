@@ -7,7 +7,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @SpringBootApplication
 @RefreshScope
 public class CardsApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(CardsApplication.class, args);
 	}

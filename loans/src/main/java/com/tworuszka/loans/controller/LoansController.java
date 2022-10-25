@@ -8,7 +8,8 @@ import com.tworuszka.loans.model.Customer;
 import com.tworuszka.loans.model.Loans;
 import com.tworuszka.loans.model.Properties;
 import com.tworuszka.loans.repository.LoansRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,18 +20,21 @@ import java.util.List;
  */
 
 @RestController
+@RequiredArgsConstructor
+@Slf4j
 public class LoansController {
 
-    @Autowired
-    private LoansRepo loansRepo;
+    private final LoansRepo loansRepo;
 
-    @Autowired
-    private LoansServiceConfig loadConfig;
+    private final LoansServiceConfig loadConfig;
 
     @PostMapping("/myLoans")
-    public List<Loans> getLoansDetails (@RequestHeader("bank-correlation-id") String correlationId, @RequestBody Customer customer) {
+    public List<Loans> getLoansDetails(@RequestHeader("bank-correlation-id") String correlationId,
+                                       @RequestBody Customer customer) {
+        log.info("getLoansDetails() method started");
         List<Loans> loans = loansRepo.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
-        if (loans!= null) {
+        log.info("getLoansDetails() method ended");
+        if (loans != null) {
             return loans;
         } else {
             return null;

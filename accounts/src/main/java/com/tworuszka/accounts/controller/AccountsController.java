@@ -8,10 +8,10 @@ import com.tworuszka.accounts.model.*;
 import com.tworuszka.accounts.repository.AccountRepository;
 import com.tworuszka.accounts.service.clients.CardsFeignClient;
 import com.tworuszka.accounts.service.clients.LoansFeignClient;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AccountsController {
 
     private final AccountRepository accountRepository;
@@ -55,6 +56,7 @@ public class AccountsController {
     public CustomerDetails myCustomerDetails(
             @RequestHeader("bank-correlation-id") String correlationId,
             @RequestBody Customer customer) {
+        log.info("myCustomerDetails() method started");
         Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId());
         List<Loans> loans = loansFeign.getLoansDetails(correlationId, customer);
         List<Cards> cards = cardsFeign.getCardsDetails(correlationId, customer);
@@ -64,6 +66,7 @@ public class AccountsController {
         customerDetails.setLoans(loans);
         customerDetails.setCards(cards);
 
+        log.info("myCustomerDetails() method ended");
         return customerDetails;
     }
 

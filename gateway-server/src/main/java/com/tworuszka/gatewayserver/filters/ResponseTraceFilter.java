@@ -14,9 +14,9 @@ import reactor.core.publisher.Mono;
  * @project Bank App
  */
 @Configuration
-public class ResponceTraceFilter {
+public class ResponseTraceFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResponceTraceFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResponseTraceFilter.class);
 
     @Autowired
     private FilterUtility filterUtility;

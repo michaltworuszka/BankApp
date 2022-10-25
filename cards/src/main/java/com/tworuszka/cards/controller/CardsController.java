@@ -8,7 +8,8 @@ import com.tworuszka.cards.model.Cards;
 import com.tworuszka.cards.model.Customer;
 import com.tworuszka.cards.model.Properties;
 import com.tworuszka.cards.repository.CardsRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +20,20 @@ import java.util.List;
  */
 
 @RestController
+@RequiredArgsConstructor
+@Slf4j
 public class CardsController {
 
-    @Autowired
-    private CardsRepo cardRepo;
-    
-    @Autowired
-    private CardsServiceConfig cardsConfig;
+    private final CardsRepo cardRepo;
+
+    private final CardsServiceConfig cardsConfig;
 
     @PostMapping("/myCards")
-    public List<Cards> getCardsDetails(@RequestHeader("bank-correlation-id") String correlationId, @RequestBody Customer customer) {
+    public List<Cards> getCardsDetails(@RequestHeader("bank-correlation-id") String correlationId,
+                                       @RequestBody Customer customer) {
+        log.info("getCardsDetails() method started");
         List<Cards> cards = cardRepo.findByCustomerId(customer.getCustomerId());
+        log.info("getCardsDetails() method ended");
         if (cards != null) {
             return cards;
         } else {

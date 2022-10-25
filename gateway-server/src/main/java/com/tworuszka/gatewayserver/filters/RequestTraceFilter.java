@@ -18,16 +18,16 @@ import reactor.core.publisher.Mono;
 
 @Order(1)
 @Component
-public class TraceFilter implements GlobalFilter {
+public class RequestTraceFilter implements GlobalFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(TraceFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(RequestTraceFilter.class);
     @Autowired
     private FilterUtility filterUtility;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders responseHeaders = exchange.getRequest().getHeaders();
-        if(isCorrelationIdPresent(responseHeaders)) {
+        if (isCorrelationIdPresent(responseHeaders)) {
             logger.info("Bank-correlation-id found in tracing filter: {}. "
             ,filterUtility.getCorrelationId(responseHeaders));
         } else {
