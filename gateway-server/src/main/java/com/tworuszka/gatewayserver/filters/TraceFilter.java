@@ -28,12 +28,12 @@ public class TraceFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         HttpHeaders responseHeaders = exchange.getRequest().getHeaders();
         if(isCorrelationIdPresent(responseHeaders)) {
-            logger.debug("Bank-correlation-id found in tracing filter: {}. "
+            logger.info("Bank-correlation-id found in tracing filter: {}. "
             ,filterUtility.getCorrelationId(responseHeaders));
         } else {
             String correlationId = generateCorrelationId();
             exchange = filterUtility.setCorrelationId(exchange, correlationId);
-            logger.debug("Bank-correlation-id generated in tracing filter: {}.", correlationId);
+            logger.info("Bank-correlation-id generated in tracing filter: {}.", correlationId);
         }
         return chain.filter(exchange);
     }

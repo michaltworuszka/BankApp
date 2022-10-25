@@ -1,6 +1,32 @@
 version: "3.8"
 
 services:
+  configserver:
+    image: misiekfiol/configserver:latest
+    ports:
+      - "8071:8071"
+    networks:
+      - bank-network
+    restart: on-failure
+
+  eureka-server:
+    image: misiekfiol/eureka-server
+    ports:
+      - "8070:8070"
+    networks:
+      - bank-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 5
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+
   accounts:
     image: misiekfiol/accounts:latest
     ports:
@@ -61,31 +87,28 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8070/eureka/
 
-  configserver:
-    image: misiekfiol/configserver:latest
+  gateway-server:
+    image: misiekfiol/gateway-server:latest
     ports:
-      - "8071:8071"
-    networks:
-      - bank-network
-    restart: on-failure
-
-  eureka-server:
-    image: misiekfiol/eureka-server
-    ports:
-      - "8070:8070"
+      - "8072:8072"
     networks:
       - bank-network
     depends_on:
       - configserver
+      - eureka-server
+      - cards
+      - accounts
+      - loans
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 15s
+        delay: 45s
         max_attempts: 5
-        window: 120s
+        window: 180s
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8070/eureka/
 
 networks:
   bank-network:
