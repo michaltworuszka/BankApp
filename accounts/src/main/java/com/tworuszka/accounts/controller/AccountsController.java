@@ -10,6 +10,7 @@ import com.tworuszka.accounts.service.clients.CardsFeignClient;
 import com.tworuszka.accounts.service.clients.LoansFeignClient;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class AccountsController {
     private final LoansFeignClient loansFeign;
 
     @PostMapping("/myAccount")
+    @Timed(value = "getAccountDetails.time", description = "Time taken to return Account Details")
     public Accounts getAccountDetails(@RequestBody Customer customer) {
         Accounts accounts = accountRepository.findByCustomerId(customer.getCustomerId());
         if (accounts != null) {
